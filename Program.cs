@@ -6,16 +6,19 @@ class Program
     static void CadastrarCategoria(List<Categoria> categorias)
     {
         Console.WriteLine("\n===== CADASTRAR CATEGORIA =====");
-        Console.Write("Nome: ");
-        string nome = Console.ReadLine();
+        string nome;
+        do
+        {
+            Console.Write("Nome: ");
+            nome = Console.ReadLine();
+
+            if (nome.Trim() == "") Console.WriteLine("Insira um nome válido!");
+        }
+        while (nome.Trim() == "");
+
 
         Categoria categoria = new Categoria(nome);
 
-        if (!categoria.ValidaCategoria())
-        {
-            Console.WriteLine("Nome da categoria inválido!");
-            return;
-        }
         //verifica nome de categoria duplicado
         foreach (Categoria c in categorias)
         {
@@ -48,21 +51,26 @@ class Program
     static void CadastrarGasto(List<Gasto> listaGastos, List<Categoria> categorias)
     {
         Console.WriteLine("\n===== CADASTRAR GASTO =====");
-        Console.Write("Descrição: ");
-        string descricao = Console.ReadLine();
 
-        bool valido = false;
-        double valor = 0;
+        string descricao;
+        do
+        {
+            Console.Write("descricao: ");
+            descricao = Console.ReadLine();
 
-        while(valido == false){
+            if (descricao.Trim() == "") Console.WriteLine("Insira uma descrição válida!");
+        }
+        while (descricao.Trim() == "");
+
+
+        double valor;
+        while (true)
+        {
             Console.Write("Valor: ");
 
-            if(!double.TryParse(Console.ReadLine(), out valor)){
-                Console.WriteLine("Escolha uma opção válida!");
-            } else{
-                valido = true;
-            }
-        }    
+            if (!double.TryParse(Console.ReadLine(), out valor) || valor <= 0) Console.WriteLine("Insira um valor válido!");
+            else break;
+        }
 
         Console.WriteLine("Selecione uma categoria: ");
         if (categorias.Count == 0)
@@ -79,21 +87,20 @@ class Program
         }
 
         int opcao = validaOpcao();
-        Categoria categoriaSelecionada = categorias[opcao-1];;
+
+        while (opcao > categorias.Count)
+        {
+            Console.WriteLine("Opção inválida!");
+            opcao = validaOpcao();
+        }
+
+        Categoria categoriaSelecionada = categorias[opcao - 1]; ;
 
         Gasto gasto = new Gasto(descricao, valor, categoriaSelecionada);
+        listaGastos.Add(gasto);
+        Console.WriteLine("Gasto adicionado!");
 
-        if (gasto.ValidaGasto())
-        {
-            listaGastos.Add(gasto);
-            Console.WriteLine("Gasto adicionado!");
-        }
-        else
-        {
-            Console.WriteLine("Erro! Descrição ou valor do gasto inválido.");
-        }
     }
-
     //Função que lista os gastos
     static void ListarGastos(List<Gasto> listaGastos)
     {
@@ -104,7 +111,7 @@ class Program
             return;
         }
 
-        int i = 1; 
+        int i = 1;
         foreach (Gasto gasto in listaGastos)
         {
             Console.WriteLine($"{i} - {gasto.descricao} - R${gasto.valor:F2} - {gasto.categoria.nome}");
@@ -115,16 +122,16 @@ class Program
     //funçao que remove categorias e os gastos correspondentes
     static void RemoverCategoria(List<Categoria> categorias, List<Gasto> listaGastos)
     {
-        if(categorias.Count == 0)
+        if (categorias.Count == 0)
         {
             Console.WriteLine("Nenhuma categoria cadastrada.");
-            return;            
+            return;
         }
 
-        Console.WriteLine("===== REMOVER CATEGORIAS =====");        
+        Console.WriteLine("===== REMOVER CATEGORIAS =====");
         Console.WriteLine("Qual categoria deseja remover?");
 
-        int i = 1;   
+        int i = 1;
         foreach (Categoria c in categorias)
         {
             Console.WriteLine($"{i}-" + c.nome);
@@ -132,15 +139,15 @@ class Program
         }
 
         int opcaoRemover = validaOpcao();
-        if (opcaoRemover > categorias.Count)
+        while (opcaoRemover > categorias.Count)
         {
             Console.WriteLine("Opção inválida!");
-            return;
+            opcaoRemover = validaOpcao();
         }
 
         Categoria categoriaRemovida = categorias[opcaoRemover - 1];
 
-        for (int j = listaGastos.Count - 1; j >= 0; j--) 
+        for (int j = listaGastos.Count - 1; j >= 0; j--)
         {
             if (listaGastos[j].categoria == categoriaRemovida)
             {
@@ -148,29 +155,29 @@ class Program
             }
         }
         categorias.RemoveAt(opcaoRemover - 1);
-        Console.WriteLine("Categoria removida!");       
+        Console.WriteLine("Categoria removida!");
     }
 
     //função que remove gastos
     static void RemoverGasto(List<Gasto> listaGastos)
     {
-        if(listaGastos.Count == 0)
+        if (listaGastos.Count == 0)
         {
             Console.WriteLine("Nenhum gasto cadastrado.");
             return;
         }
 
-        Console.WriteLine("===== REMOVER GASTOS =====");        
+        Console.WriteLine("===== REMOVER GASTOS =====");
         Console.WriteLine("Qual gasto deseja remover?");
 
         ListarGastos(listaGastos);
 
         int opcaoRemover = validaOpcao();
 
-        if (opcaoRemover > listaGastos.Count)
+        while (opcaoRemover > listaGastos.Count)
         {
-            Console.WriteLine("Opção inválida gasto!");
-            return;
+            Console.WriteLine("Opção inválida!");
+            opcaoRemover = validaOpcao();
         }
         listaGastos.RemoveAt(opcaoRemover - 1);
         Console.WriteLine("Gasto removido!");
@@ -179,14 +186,14 @@ class Program
     //função que soma os gastos (sem distinção de categorias)
     static void TotalGasto(List<Gasto> listaGastos)
     {
-        if(listaGastos.Count == 0)
+        if (listaGastos.Count == 0)
         {
             Console.WriteLine("Nenhum gasto cadastrado.");
-            return;            
+            return;
         }
         double soma = 0;
         Console.WriteLine("===== TOTAL DE GASTOS =====");
-        for(int i = 0; i < listaGastos.Count; i++)
+        for (int i = 0; i < listaGastos.Count; i++)
         {
             soma += listaGastos[i].valor;
         }
@@ -216,18 +223,22 @@ class Program
         }
     }
 
-        static int validaOpcao(){
-              int opcao;
-              while(true)
-             {
-                if(!int.TryParse(Console.ReadLine(), out opcao) || opcao < 1){
+    static int validaOpcao()
+    {
+        int opcao;
+        while (true)
+        {
+            if (!int.TryParse(Console.ReadLine(), out opcao) || opcao < 1)
+            {
                 Console.WriteLine("Escolha uma opção válida!");
-                }else{
-                 return opcao;
-                }
-             }
+            }
+            else
+            {
+                return opcao;
+            }
         }
-        
+    }
+
     //função que mostra o menu
     static void MostrarMenu()
     {
@@ -238,13 +249,13 @@ class Program
         Console.WriteLine("[4] Listar gastos");
         Console.WriteLine("[5] Total por categoria");
         Console.WriteLine("[6] Total de gastos");
-        Console.WriteLine("[7] Remover categoria");        
+        Console.WriteLine("[7] Remover categoria");
         Console.WriteLine("[8] Remover gasto");
-        Console.WriteLine("[9] Sair");                                           
+        Console.WriteLine("[9] Sair");
     }
 
     //enum para facilitar na construção do menu e recepção dos inputs
-        enum menuOpcao
+    enum menuOpcao
     {
         Cad_Categoria = 1,
         Cad_Gasto = 2,
@@ -276,7 +287,7 @@ class Program
                     CadastrarCategoria(categorias);
                     break;
                 case menuOpcao.Cad_Gasto:
-                    CadastrarGasto(listaGastos,categorias);
+                    CadastrarGasto(listaGastos, categorias);
                     break;
                 case menuOpcao.Listar_Categoria:
                     ListarCategorias(categorias);
@@ -286,7 +297,7 @@ class Program
                     break;
                 case menuOpcao.Total_Categoria:
                     TotalCategoria(listaGastos, categorias);
-                    break;                    
+                    break;
                 case menuOpcao.Total_Gasto:
                     TotalGasto(listaGastos);
                     break;

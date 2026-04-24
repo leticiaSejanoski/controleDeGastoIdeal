@@ -12,12 +12,5 @@ class Gasto
         this.valor = valor;
         this.categoria = categoria;
     }
-
-    //Verifica se os valores inseridos pelo usuário são válidos para adicionar na List
-    public bool ValidaGasto()
-    {
-        if (this.descricao == "" || this.descricao == " " || this.valor <= 0) return false;
-        else return true;
-    }
 }
 
