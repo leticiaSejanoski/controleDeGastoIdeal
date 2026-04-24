@@ -94,7 +94,7 @@ class Program
             return;
         }
 
-        int i = 1; //eu add aq pra colocar indice qnd for mostrar os gastos e pra auxiliar na remoção
+        int i = 1; 
         foreach (Gasto gasto in listaGastos)
         {
             Console.WriteLine($"{i} - {gasto.descricao} - R${gasto.valor} - {gasto.categoria.nome}");
@@ -129,7 +129,7 @@ class Program
         }
         Categoria categoriaRemovida = categorias[opcaoRemover - 1];
 
-        for (int j = listaGastos.Count - 1; j >= 0; j--)
+        for (int j = listaGastos.Count - 1; j >= 0; j--) 
         {
             if (listaGastos[j].categoria == categoriaRemovida)
             {
