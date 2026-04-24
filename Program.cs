@@ -51,8 +51,18 @@ class Program
         Console.Write("Descrição: ");
         string descricao = Console.ReadLine();
 
-        Console.Write("Valor: ");
-        double valor = double.Parse(Console.ReadLine());
+        bool valido = false;
+        double valor = 0;
+
+        while(valido == false){
+            Console.Write("Valor: ");
+
+            if(!double.TryParse(Console.ReadLine(), out valor)){
+                Console.WriteLine("Escolha uma opção válida!");
+            } else{
+                valido = true;
+            }
+        }    
 
         Console.WriteLine("Selecione uma categoria: ");
         if (categorias.Count == 0)
@@ -180,7 +190,7 @@ class Program
         {
             soma += listaGastos[i].valor;
         }
-        Console.WriteLine($"Total de gastos: R$ ${soma:F2}");
+        Console.WriteLine($"Total de gastos: R$ {soma:F2}");
     }
 
     //função que soma os gastos da mesma categoria
@@ -230,7 +240,7 @@ class Program
         Console.WriteLine("[6] Total de gastos");
         Console.WriteLine("[7] Remover categoria");        
         Console.WriteLine("[8] Remover gasto");
-        Console.WriteLine("[0] Sair");                                           
+        Console.WriteLine("[9] Sair");                                           
     }
 
     //enum para facilitar na construção do menu e recepção dos inputs
@@ -244,7 +254,7 @@ class Program
         Total_Gasto = 6,
         Remov_Categoria = 7,
         Remov_Gasto = 8,
-        Sair = 0
+        Sair = 9
     }
 
 

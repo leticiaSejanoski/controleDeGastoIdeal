@@ -8,23 +8,23 @@
     "net7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\LETICIASEJANOSKISCHI\\.nuget\\packages\\": {},
+    "C:\\Users\\MARIAISABELLADEFRANC\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\LETICIASEJANOSKISCHI\\Documents\\GitHub\\controleDeGastoIdeal\\controleDeGastoIdeal.csproj",
+      "projectUniqueName": "C:\\Users\\MARIAISABELLADEFRANC\\Documents\\GitHub\\controleDeGastoIdeal\\controleDeGastoIdeal.csproj",
       "projectName": "controleDeGastoIdeal",
-      "projectPath": "C:\\Users\\LETICIASEJANOSKISCHI\\Documents\\GitHub\\controleDeGastoIdeal\\controleDeGastoIdeal.csproj",
-      "packagesPath": "C:\\Users\\LETICIASEJANOSKISCHI\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\LETICIASEJANOSKISCHI\\Documents\\GitHub\\controleDeGastoIdeal\\obj\\",
+      "projectPath": "C:\\Users\\MARIAISABELLADEFRANC\\Documents\\GitHub\\controleDeGastoIdeal\\controleDeGastoIdeal.csproj",
+      "packagesPath": "C:\\Users\\MARIAISABELLADEFRANC\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\MARIAISABELLADEFRANC\\Documents\\GitHub\\controleDeGastoIdeal\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\LETICIASEJANOSKISCHI\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\MARIAISABELLADEFRANC\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
