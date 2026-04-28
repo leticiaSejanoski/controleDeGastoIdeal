@@ -94,7 +94,7 @@ class Program
             opcao = validaOpcao();
         }
 
-        Categoria categoriaSelecionada = categorias[opcao - 1]; ;
+        Categoria categoriaSelecionada = categorias[opcao - 1]; 
 
         Gasto gasto = new Gasto(descricao, valor, categoriaSelecionada);
         listaGastos.Add(gasto);
@@ -219,7 +219,7 @@ class Program
                     soma += listaGastos[j].valor;
                 }
             }
-            Console.WriteLine(categorias[i].nome + $": R$ ${soma:F2}");
+            Console.WriteLine(categorias[i].nome + $": R$ {soma:F2}");
         }
     }
 
