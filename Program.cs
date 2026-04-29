@@ -22,7 +22,7 @@ class Program
         //verifica nome de categoria duplicado
         foreach (Categoria c in categorias)
         {
-            if (nome.ToLower() == c.nome.ToLower())
+            if (nome.Trim().ToLower() == c.nome.Trim().ToLower())
             {
                 Console.WriteLine("Categoria já existe!");
                 return;
