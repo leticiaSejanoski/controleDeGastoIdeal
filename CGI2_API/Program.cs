@@ -56,6 +56,37 @@ app.MapPost("/gastos", (Gasto gasto, AppDataContext context) =>
     return Results.Created($"/gastos/{gasto.Id}", gasto); //(url, objeto)
 });
 
+//deletar gastos
+app.MapDelete("/gastos/remover/{id}", (AppDataContext context, int id) =>{
+    Gasto gasto = context.Gastos.Find(id);
+    
+        if (gasto == null)
+        {
+           return "Gasto não encontrado";
+
+        }
+            context.Gastos.Remove(gasto);
+            context.SaveChanges();
+            return "Gasto removido!";
+
+});
+
+//deletar categorias
+app.MapDelete("/categorias/remover/{id}", (AppDataContext context, int id) =>{
+    Categoria categoria = context.Categorias.Find(id);
+    
+        if (categoria == null)
+        {
+           return "Categoria não encontrada";
+
+        }
+            context.Categorias.Remove(categoria);
+            context.SaveChanges();
+            return "Categoria removida!";
+
+});
+
+
 app.Run();
 
 static string validarCategoria(AppDataContext context, Categoria categoria)
@@ -89,7 +120,10 @@ static string validarGasto(AppDataContext context, Gasto gasto)
     return "";
 }
 
+ 
+
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }
+
