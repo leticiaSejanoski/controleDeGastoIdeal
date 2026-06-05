@@ -57,33 +57,32 @@ app.MapPost("/gastos", (Gasto gasto, AppDataContext context) =>
 });
 
 //deletar gastos
-app.MapDelete("/gastos/remover/{id}", (AppDataContext context, int id) =>{
+app.MapDelete("/gastos/{id}", (AppDataContext context, int id) =>{
     Gasto gasto = context.Gastos.Find(id);
     
         if (gasto == null)
         {
-           return "Gasto não encontrado";
+           return Results.NotFound("Gasto não encontrado");
 
         }
             context.Gastos.Remove(gasto);
             context.SaveChanges();
-            return "Gasto removido!";
+            return Results.Ok("Gasto removido!");
 
 });
 
 //deletar categorias
-app.MapDelete("/categorias/remover/{id}", (AppDataContext context, int id) =>{
+app.MapDelete("/categorias/{id}", (AppDataContext context, int id) =>{
     Categoria categoria = context.Categorias.Find(id);
     
         if (categoria == null)
         {
-           return "Categoria não encontrada";
+           return Results.NotFound("Categoria não encontrada");
 
         }
             context.Categorias.Remove(categoria);
             context.SaveChanges();
-            return "Categoria removida!";
-
+            return Results.Ok("Categoria removida!");
 });
 
 
