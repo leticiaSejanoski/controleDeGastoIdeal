@@ -85,6 +85,31 @@ app.MapDelete("/categorias/{id}", (AppDataContext context, int id) =>{
             return Results.Ok("Categoria removida!");
 });
 
+//total de gastos
+app.MapGet("/gastos/total", (AppDataContext context) =>
+{
+    double total = context.Gastos.Sum(g => g.Valor);
+
+    return Results.Ok(total);
+});
+
+
+//total de gastos por categoria
+app.MapGet("/categorias/{id}/total", (AppDataContext context, int id) =>
+{
+    var categoria = context.Categorias.FirstOrDefault(c => c.Id == id);
+
+    if (categoria == null)
+        return Results.NotFound();
+
+    double total = context.Gastos.Where(g => g.CategoriaId == id).Sum(g => g.Valor);
+
+    return Results.Ok(new{
+        Categoria = categoria.Nome,
+        Total = total
+    });
+});
+
 
 app.Run();
 
