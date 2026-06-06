@@ -104,10 +104,7 @@ app.MapGet("/categorias/{id}/total", (AppDataContext context, int id) =>
 
     double total = context.Gastos.Where(g => g.CategoriaId == id).Sum(g => g.Valor);
 
-    return Results.Ok(new{
-        Categoria = categoria.Nome,
-        Total = total
-    });
+    return Results.Ok(total);
 });
 
 
