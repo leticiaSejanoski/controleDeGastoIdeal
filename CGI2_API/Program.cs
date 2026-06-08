@@ -28,7 +28,7 @@ app.MapPost("/categorias", (Categoria categoria, AppDataContext context) =>
     string erro = validarCategoria(context, categoria);
 
     if (erro != "") return Results.BadRequest(erro);
-    
+
     context.Categorias.Add(categoria);
     context.SaveChanges();
 
@@ -57,32 +57,34 @@ app.MapPost("/gastos", (Gasto gasto, AppDataContext context) =>
 });
 
 //deletar gastos
-app.MapDelete("/gastos/{id}", (AppDataContext context, int id) =>{
+app.MapDelete("/gastos/{id}", (AppDataContext context, int id) =>
+{
     Gasto gasto = context.Gastos.Find(id);
-    
-        if (gasto == null)
-        {
-           return Results.NotFound("Gasto não encontrado");
 
-        }
-            context.Gastos.Remove(gasto);
-            context.SaveChanges();
-            return Results.Ok("Gasto removido!");
+    if (gasto == null)
+    {
+        return Results.NotFound("Gasto não encontrado");
+
+    }
+    context.Gastos.Remove(gasto);
+    context.SaveChanges();
+    return Results.Ok("Gasto removido!");
 
 });
 
 //deletar categorias
-app.MapDelete("/categorias/{id}", (AppDataContext context, int id) =>{
+app.MapDelete("/categorias/{id}", (AppDataContext context, int id) =>
+{
     Categoria categoria = context.Categorias.Find(id);
-    
-        if (categoria == null)
-        {
-           return Results.NotFound("Categoria não encontrada");
 
-        }
-            context.Categorias.Remove(categoria);
-            context.SaveChanges();
-            return Results.Ok("Categoria removida!");
+    if (categoria == null)
+    {
+        return Results.NotFound("Categoria não encontrada");
+
+    }
+    context.Categorias.Remove(categoria);
+    context.SaveChanges();
+    return Results.Ok("Categoria removida!");
 });
 
 //total de gastos
@@ -97,14 +99,51 @@ app.MapGet("/gastos/total", (AppDataContext context) =>
 //total de gastos por categoria
 app.MapGet("/categorias/{id}/total", (AppDataContext context, int id) =>
 {
-    var categoria = context.Categorias.FirstOrDefault(c => c.Id == id);
+    var categoria = context.Categorias.Find(id);
 
     if (categoria == null)
-        return Results.NotFound();
+        return Results.NotFound("Categoria não encontrada!");
 
     double total = context.Gastos.Where(g => g.CategoriaId == id).Sum(g => g.Valor);
 
     return Results.Ok(total);
+});
+
+//atualiza categoria
+app.MapPut("/categorias/{id}", (int id, Categoria categoriaAtualizada, AppDataContext context) =>
+{
+    Console.WriteLine($"Id recebido: {id}");
+Console.WriteLine($"Nome recebido: {categoriaAtualizada.Nome}");
+    Categoria categoria = context.Categorias.Find(id);
+
+    if (categoria == null) return Results.NotFound("Categoria não encontrada!");
+
+    string erro = validarAtualizacaoCategoria(context, categoriaAtualizada, id);
+
+    if (erro != "") return Results.BadRequest(erro);
+
+    categoria.Nome = categoriaAtualizada.Nome;
+    context.SaveChanges();
+    return Results.Ok(categoria);
+});
+
+//atualiza gastos
+app.MapPut("/gastos/{id}", (int id, Gasto gastoAtualizado, AppDataContext context) =>
+{
+    Gasto gasto = context.Gastos.Find(id);
+
+    if (gasto == null) return Results.NotFound("Gasto não encontrado!");
+
+    string erro = validarGasto(context, gastoAtualizado);
+
+    if (erro != "") return Results.BadRequest(erro);
+
+    gasto.Descricao = gastoAtualizado.Descricao;
+    gasto.Valor = gastoAtualizado.Valor;
+    gasto.CategoriaId = gastoAtualizado.CategoriaId;
+
+    context.SaveChanges();
+    return Results.Ok(gasto);
 });
 
 
@@ -141,7 +180,25 @@ static string validarGasto(AppDataContext context, Gasto gasto)
     return "";
 }
 
- 
+static string validarAtualizacaoCategoria(AppDataContext context, Categoria categoria, int id)
+{
+    if (categoria.Nome.Trim() == "")
+    {
+        return "Insira um nome válido!";
+    }
+    //verifica nome de categoria duplicado
+    foreach (Categoria c in context.Categorias)
+    {
+        if (c.Nome.Trim().ToLower() == categoria.Nome.Trim().ToLower() && c.Id != id)
+        {
+                return "Categoria já existe!";
+        }
+    }
+    
+    return "";
+}
+
+
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
