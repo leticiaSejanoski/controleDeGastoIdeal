@@ -1,4 +1,4 @@
-namespace CGI2.Models
+namespace CGI2_API.Models
 {
     public class Categoria
     {

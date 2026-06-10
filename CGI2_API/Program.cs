@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using CGI2.Models;
-using CGI2.Data;
+using CGI2_API.Models;
+using CGI2_API.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -112,8 +112,6 @@ app.MapGet("/categorias/{id}/total", (AppDataContext context, int id) =>
 //atualiza categoria
 app.MapPut("/categorias/{id}", (int id, Categoria categoriaAtualizada, AppDataContext context) =>
 {
-    Console.WriteLine($"Id recebido: {id}");
-Console.WriteLine($"Nome recebido: {categoriaAtualizada.Nome}");
     Categoria categoria = context.Categorias.Find(id);
 
     if (categoria == null) return Results.NotFound("Categoria não encontrada!");

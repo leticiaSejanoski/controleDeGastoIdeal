@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using CGI2.Models;
+using CGI2_API.Models;
 
-namespace CGI2.Data
+namespace CGI2_API.Data
 {
     public class AppDataContext : DbContext
     {
@@ -10,7 +10,7 @@ namespace CGI2.Data
         : base(options)
         {
         }
-        public DbSet<Categoria> Categorias { get; set; } //tabela Caterogias
+        public DbSet<Categoria> Categorias { get; set; } //tabela Categorias
         public DbSet<Gasto> Gastos { get; set; } //tabela Gastos
     }
 }

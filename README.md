@@ -23,8 +23,3 @@ Este projeto tem como objetivo ajudar usuários a **registrar, organizar e anali
 - 💲Validar valor(não negativo);
 - 📃Validar descrição;
 - 🔢Evitar a inserção de dados não numéricos em campos numéricos.
-
-
-
-
-
